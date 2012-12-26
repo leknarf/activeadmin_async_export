@@ -1,6 +1,8 @@
 # ActiveadminAsyncExport
 
-TODO: Write a gem description
+ActiveAdmin plugin for email delivery of CSV exports.
+
+Uses resque_mailer to asynchronously run slow data exports and deliver the results via email.
 
 ## Installation
 
@@ -18,7 +20,13 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+Just add `gem 'activeadmin_async_export'` to your Gemfile. All of the active admin resource index pages will now include a link export data via email. This link will run the CSV report and email the results as an attachement to the current admin user.
+
+### Set the from email address
+
+In an initializer, include a line like the following:
+
+    ActiveAdmin::AsyncExport.from_email_address = 'admin@topshelfclothes.com'
 
 ## Contributing
 

@@ -17,5 +17,5 @@ Gem::Specification.new do |gem|
   gem.required_ruby_version = '>= 1.9.2'
 
   gem.add_runtime_dependency 'activeadmin', '>= 0.5.1'
-  gem.add_runtime_dependency 'resque_mailer'
+  gem.add_runtime_dependency 'sidekiq'
 end

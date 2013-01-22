@@ -1,7 +1,6 @@
 module ActiveAdmin
   module AsyncExport
     class AsyncExportMailer < ActionMailer::Base
-      include Resque::Mailer
       add_template_helper MethodOrProcHelper
 
       def csv_export(admin_email, model_name)

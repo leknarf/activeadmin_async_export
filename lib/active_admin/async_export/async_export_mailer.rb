@@ -8,7 +8,7 @@ module ActiveAdmin
         config = controller.send(:active_admin_config)
         path = controller.send(:active_admin_template, 'index.csv')
         csv_filename = controller.send(:csv_filename)
-        collection = Kernel::const_get(model_name).all
+        collection = controller.send(:scoped_collection)
         app = ActiveAdmin.application
 
         csv = render_to_string(file: path,

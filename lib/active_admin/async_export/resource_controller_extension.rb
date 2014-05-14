@@ -11,11 +11,23 @@ module ActiveAdmin
           format.email do
             current_user_method = active_admin_config.namespace.application.current_user_method
             admin_email = send(current_user_method).email
-            ActiveAdmin::AsyncExport::AsyncExportMailer.delay.csv_export(admin_email, collection.first.class.to_s)
+
+            ActiveAdmin::AsyncExport::AsyncExportMailer.delay.csv_export(admin_email, collection.first.class.to_s, csv_collection)
             redirect_to :back, notice: "CSV export emailed to #{admin_email}!"
           end
         end
       end
+
+      def csv_collection
+        collection = scoped_collection
+
+        collection = apply_authorization_scope(collection)
+        collection = apply_sorting(collection)
+        collection = apply_filtering(collection)
+        collection = apply_scoping(collection)
+        collection.to_a
+      end
+
     end
   end
 end

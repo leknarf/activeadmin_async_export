@@ -2,12 +2,13 @@ module ActiveAdmin
   module AsyncExport
     module ResourceControllerExtension
       def self.included(base)
+        super
         base.send :alias_method_chain, :index, :email
         base.send :respond_to, :email
       end
 
-      def index_with_email(options={}, &block)
-        index_without_email(options) do |format|
+      def index_with_email(&block)
+        index_without_email do |format|
           format.email do
             current_user_method = active_admin_config.namespace.application.current_user_method
             admin_email = send(current_user_method).email

@@ -1,12 +1,25 @@
 module ActiveAdmin
   module AsyncExport
     class AsyncExportMailer < ActionMailer::Base
-      def csv_export(admin_email, model_name)
+      def csv_export(admin_email, model_name, params_json)
+        params = JSON.parse(params_json)
+
         controller = Kernel::qualified_const_get("Admin::#{model_name}sController").new
+        controller.send('params=', params)
+
         config = controller.send(:active_admin_config)
         csv_filename = controller.send(:csv_filename)
+
         def controller.find_collection(options = {})
-          options[:only] = [:includes, :collection_decorator]
+          options[:only] = [
+            :sorting,
+            :filtering,
+            :scoping,
+            :includes,
+            :pagination,
+            :collection_decorator
+          ]
+          
           collection = scoped_collection
           collection_applies(options).each do |applyer|
             collection = send("apply_#{applyer}", collection)

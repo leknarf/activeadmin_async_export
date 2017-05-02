@@ -4,7 +4,7 @@ module ActiveAdmin
       def csv_export(admin_email, model_name, params_json)
         params = JSON.parse(params_json)
 
-        controller = Kernel::qualified_const_get("Admin::#{model_name}sController").new
+        controller = Kernel::qualified_const_get("#{ActiveAdmin::AsyncExport.controller_namespace}::#{model_name}sController").new
         controller.send('params=', params)
 
         config = controller.send(:active_admin_config)
@@ -19,7 +19,7 @@ module ActiveAdmin
             :pagination,
             :collection_decorator
           ]
-          
+
           collection = scoped_collection
           collection_applies(options).each do |applyer|
             collection = send("apply_#{applyer}", collection)

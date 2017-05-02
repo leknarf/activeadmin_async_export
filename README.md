@@ -28,6 +28,12 @@ In an initializer, include a line like the following:
 
     ActiveAdmin::AsyncExport.from_email_address = 'admin@topshelfclothes.com'
 
+### Change the active admin namespace
+
+If your namespace of active-admin is not Admin you can change it.
+
+    ActiveAdmin::AsyncExport.controller_namespace = 'Myadmin'
+
 ## Contributing
 
 1. Fork it
